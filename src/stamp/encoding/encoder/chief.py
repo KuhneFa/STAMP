@@ -13,7 +13,7 @@ from tqdm import tqdm
 from stamp.encoding.config import EncoderName
 from stamp.encoding.encoder import Encoder
 from stamp.preprocessing.config import ExtractorName
-from stamp.types import DeviceLikeType, PandasLabel
+from stamp.types import DeviceLikeType, PandasLabel, get_default_device
 from stamp.utils.cache import STAMP_CACHE_DIR, file_digest, get_processing_code_hash
 
 __author__ = "Juan Pablo Ricapito"
@@ -66,7 +66,7 @@ class CHIEFModel(nn.Module):
         )
 
     def relocate(self):
-        device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+        device = torch.device(get_default_device())
         self.attention_net = self.attention_net.to(device)
         self.classifiers = self.classifiers.to(device)
         self.instance_classifiers = self.instance_classifiers.to(device)

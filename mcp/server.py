@@ -140,9 +140,9 @@ async def preprocess_stamp(
         Field(
             description="The device to use for computation. "
             "Possible options are 'cuda' for NVIDIA GPUs, 'cpu' for general-purpose "
-            "processors, and 'mps' for Apple Silicon GPUs. Default is 'cuda'."
+            "processors, and 'mps' for Apple Silicon GPUs. Default is 'mps'."
         ),
-    ] = "cuda",
+    ] = "mps",
     max_workers: Annotated[
         int,
         Field(
@@ -186,7 +186,7 @@ async def preprocess_stamp(
                 wsi_dir="input/slides",
                 extractor="ctranspath",
                 cache_dir="cache/tiles",
-                device="cuda",
+                device="mps",
                 max_workers=8
             )
         "Command completed successfully: ..."
@@ -624,9 +624,9 @@ async def encode_slides_stamp(
         Field(
             description="The device to use for computation. "
             "Possible options are 'cuda' for NVIDIA GPUs, 'cpu' for general-purpose "
-            "processors, and 'mps' for Apple Silicon GPUs. Default is 'cuda'."
+            "processors, and 'mps' for Apple Silicon GPUs. Default is 'mps'."
         ),
-    ] = "cuda",
+    ] = "mps",
 ) -> str:
     """Tile-Level features can be enconded into a single feature per slide,
     this is useful when trying to capture global patterns across whole slides.
@@ -643,7 +643,7 @@ async def encode_slides_stamp(
                 output_dir="output/features",
                 wsi_dir="input/slides",
                 encoder="chief",
-                device="cuda",
+                device="mps",
                 feature_dir="input/features"
             )
         "Command completed successfully: ..."
@@ -691,9 +691,9 @@ async def encode_patients_stamp(
         Field(
             description="The device to use for computation. "
             "Possible options are 'cuda' for NVIDIA GPUs, 'cpu' for general-purpose "
-            "processors, and 'mps' for Apple Silicon GPUs. Default is 'cuda'."
+            "processors, and 'mps' for Apple Silicon GPUs. Default is 'mps'."
         ),
-    ] = "cuda",
+    ] = "mps",
 ) -> str:
     """Tile-Level features can be enconded into a single feature per patient,
     this is useful when trying to capture global patterns across whole slides.
@@ -710,7 +710,7 @@ async def encode_patients_stamp(
                 output_dir="output/features",
                 wsi_dir="input/slides",
                 encoder="chief",
-                device="cuda",
+                device="mps",
                 feature_dir="input/features"
                 slide_table="input/slide_table.csv",
             )

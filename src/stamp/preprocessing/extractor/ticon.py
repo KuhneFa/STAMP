@@ -18,6 +18,7 @@ from torch import Tensor
 from torchvision import transforms
 
 from stamp.preprocessing.extractor import Extractor
+from stamp.types import get_default_device
 
 try:
     import timm
@@ -576,7 +577,9 @@ def _init_weights(m: nn.Module, xavier_gain=1) -> None:
         m._device_weight_init()  # pyright: ignore[reportCallIssue]
 
 
-def load_ticon(device: str = "cuda") -> nn.Module:
+def load_ticon(device: str | None = None) -> nn.Module:
+    if device is None:
+        device = get_default_device()
     model_cfg = {
         "transformers_kwargs": {
             "embed_dim": 1536,
@@ -720,7 +723,7 @@ class HOptimusTICON(nn.Module):
 
 def ticon(device: str | None = None) -> Extractor[nn.Module]:
     if device is None:
-        device = "cuda" if torch.cuda.is_available() else "cpu"
+        device = get_default_device()
     model = HOptimusTICON(torch.device(device))
 
     transform = transforms.Compose(

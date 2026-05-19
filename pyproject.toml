@@ -102,9 +102,9 @@ cobra = [
     "mamba-ssm @ https://github.com/state-spaces/mamba/releases/download/v2.3.1/mamba_ssm-2.3.1+cu13torch2.10cxx11abiTRUE-cp313-cp313-linux_x86_64.whl ; sys_platform == 'linux' and platform_machine == 'x86_64' and python_version == '3.13'",
     "mamba-ssm @ https://github.com/state-spaces/mamba/releases/download/v2.3.1/mamba_ssm-2.3.1+cu13torch2.10cxx11abiTRUE-cp313-cp313-linux_aarch64.whl ; sys_platform == 'linux' and platform_machine == 'aarch64' and python_version == '3.13'",
 
-    "cobra @ git+http://github.com/KatherLab/COBRA.git@49d231191db5a9c2ea37a2398dd922c8c9ee9cdb",
-    "jinja2>=3.1.4",
-    "triton",
+    "cobra @ git+http://github.com/KatherLab/COBRA.git@49d231191db5a9c2ea37a2398dd922c8c9ee9cdb ; sys_platform == 'linux'",
+    "jinja2>=3.1.4 ; sys_platform == 'linux'",
+    "triton ; sys_platform == 'linux'",
 ]
 prism_cpu = [
     "sacremoses==0.1.1",
@@ -143,12 +143,15 @@ cpu = [
 gpu = [
     "torch~=2.10.0",
     "torchvision~=0.25.0",
-    "stamp[conch,ctranspath,uni,virchow2,chief_ctranspath,conch1_5_cpu,prism,madeleine,plip,musk_cpu,cobra]"
+    "stamp[conch,ctranspath,uni,virchow2,chief_ctranspath,conch1_5_cpu,prism,madeleine,plip,musk_cpu]",
+    "stamp[cobra] ; sys_platform == 'linux'"
 ]
 gpu_all = [
     "torch~=2.10.0",
     "torchvision~=0.25.0",
-    "stamp[conch,ctranspath,uni,virchow2,chief_ctranspath,musk,gigapath,conch1_5,prism,madeleine,plip,cobra]"
+    "stamp[conch,ctranspath,uni,virchow2,chief_ctranspath,prism,madeleine,plip]",
+    "stamp[musk,gigapath,conch1_5,cobra] ; sys_platform == 'linux'",
+    "stamp[musk_cpu,conch1_5_cpu] ; sys_platform == 'darwin'"
 ]
 all = ["stamp[cpu]"]
 
@@ -204,13 +207,19 @@ build-constraint-dependencies = [
 [tool.uv.sources]
 torch = [
   { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu130", extra = "gpu" },
-  { index = "pytorch-cu130", extra = "gpu_all" },
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", extra = "gpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", extra = "gpu_all", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cu130", extra = "gpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu130", extra = "gpu_all", marker = "sys_platform == 'linux'" },
 ]
 torchvision = [
   { index = "pytorch-cpu", extra = "cpu" },
-  { index = "pytorch-cu130", extra = "gpu" },
-  { index = "pytorch-cu130", extra = "gpu_all" },
+  { index = "pytorch-cpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", extra = "gpu", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cpu", extra = "gpu_all", marker = "sys_platform == 'darwin'" },
+  { index = "pytorch-cu130", extra = "gpu", marker = "sys_platform == 'linux'" },
+  { index = "pytorch-cu130", extra = "gpu_all", marker = "sys_platform == 'linux'" },
 ]
 
 [[tool.uv.index]]

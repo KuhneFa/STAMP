@@ -2,11 +2,10 @@ import os
 from collections.abc import Sequence
 from pathlib import Path
 
-import torch
 from pydantic import BaseModel, ConfigDict, Field
 
 from stamp.modeling.registry import ModelName
-from stamp.types import Category, PandasLabel, Task
+from stamp.types import Category, PandasLabel, Task, get_default_accelerator
 
 _DROP_PATIENTS_WITH_MISSING_GROUND_TRUTH_DESCRIPTION = (
     "If true, only patients present in the clinical table are included. "
@@ -86,7 +85,7 @@ class DeploymentConfig(BaseModel):
     )
 
     num_workers: int = min(os.cpu_count() or 1, 16)
-    accelerator: str = "gpu" if torch.cuda.is_available() else "cpu"
+    accelerator: str = Field(default_factory=get_default_accelerator)
 
 
 class VitModelParams(BaseModel):
@@ -153,7 +152,7 @@ class AdvancedConfig(BaseModel):
     batch_size: int = 64
     max_epochs: int = 32
     patience: int = 16
-    accelerator: str = "gpu" if torch.cuda.is_available() else "cpu"
+    accelerator: str = Field(default_factory=get_default_accelerator)
     max_lr: float = 1e-4
     div_factor: float = 25.0
     model_name: ModelName | None = Field(

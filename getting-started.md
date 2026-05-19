@@ -104,8 +104,8 @@ preprocessing:
   # cache_dir: null
 
   # Device to run feature extraction on.
-  # Set this to "cpu" if you do not have a CUDA-capable GPU.
-  device: "cuda"
+  # Use "mps" on Apple Silicon, "cuda" on NVIDIA GPUs, or "cpu" as fallback.
+  device: "mps"
 
   # How many workers to use for tile extraction.  Should be less or equal to
   # the number of cores of your system.
@@ -326,8 +326,8 @@ slide_encoding:
   # Directory where the extracted features are stored.
   feat_dir: "/path/your/extracted/features/are/stored/in"
   
-  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", etc.)
-  device: "cuda"
+  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
 
   # Optional settings:
   # Directory where the aggregated features are stored. Needed for
@@ -370,8 +370,8 @@ patient_encoding:
   # containing the slide ID, and one called "FILENAME", containing the feature file path relative to `feat_dir`.
   slide_table: "/path/of/slide.csv"
   
-  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", etc.)
-  device: "cuda"
+  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
 
   # Optional settings:
   patient_label: "PATIENT"
@@ -456,7 +456,7 @@ heatmaps:
   - slide2.mrxs
 
   # Device to run heatmap generation on
-  device: "cuda"
+  device: "mps"
   ```
 
   > **Note:** Heatmaps currently only work with tile-level features. If you have slide-level or patient-level features, you'll need to use the original tile-level features for heatmap generation.

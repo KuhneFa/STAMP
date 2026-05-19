@@ -35,6 +35,22 @@ SlideMPP = NewType("SlideMPP", float)
 
 DeviceLikeType: TypeAlias = str | torch.device | int
 
+
+def get_default_device() -> str:
+    if torch.cuda.is_available():
+        return "cuda"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
+
+def get_default_accelerator() -> str:
+    if torch.cuda.is_available():
+        return "gpu"
+    if torch.backends.mps.is_available():
+        return "mps"
+    return "cpu"
+
 PatientId: TypeAlias = str
 GroundTruth: TypeAlias = str
 # Survival ground-truth is represented as (time, event)

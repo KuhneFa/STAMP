@@ -8,8 +8,8 @@ preprocessing:
   # Some of them require requesting access to the respective authors beforehand.
   extractor: "chief-ctranspath"
 
-  # Device to run feature extraction on ("cpu", "cuda", "cuda:0", etc.)
-  device: "cuda"
+  # Device to run feature extraction on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
 
   # Optional settings:
 
@@ -262,6 +262,9 @@ heatmaps:
   # Manual magnification level to extract tiles from
   #default_slide_mpp: 1.0
 
+  # Device to run heatmap generation on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
+
 
 slide_encoding:
   # Encoder to use for slide encoding. Possible options are "cobra",
@@ -274,8 +277,8 @@ slide_encoding:
   # Directory where the extracted features are stored.
   feat_dir: "/path/your/extracted/features/are/stored/in"
   
-  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", etc.)
-  device: "cuda"
+  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
 
   # Optional settings:
   # Directory where the aggregated features are stored. Needed for
@@ -302,8 +305,8 @@ patient_encoding:
   # containing the slide ID, and one called "FILENAME", containing the feature file path relative to `feat_dir`.
   slide_table: "/path/of/slide.csv"
   
-  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", etc.)
-  device: "cuda"
+  # Device to run slide encoding on ("cpu", "cuda", "cuda:0", "mps", etc.)
+  device: "mps"
 
   # Optional settings:
   patient_label: "PATIENT"

@@ -1,9 +1,8 @@
 from pathlib import Path
 
-import torch
 from pydantic import BaseModel, ConfigDict, Field
 
-from stamp.types import SlideMPP
+from stamp.types import SlideMPP, get_default_device
 
 
 class HeatmapConfig(BaseModel):
@@ -21,7 +20,7 @@ class HeatmapConfig(BaseModel):
     )
 
     device: str = Field(
-        default_factory=lambda: "cuda" if torch.cuda.is_available() else "cpu",
+        default_factory=get_default_device,
         description="Device to use for computation",
     )
 
